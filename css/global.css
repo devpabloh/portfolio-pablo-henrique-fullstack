@@ -1,0 +1,56 @@
+*, 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font: inherit;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; 
+}
+
+:root{
+    /* Fonte - Weight */
+    --fw-base: 400;
+    --fw-md: 500;
+    --fw-bold: 800;
+
+    /* Font-size */
+    --fs-sm: 0.875rem; /* 14px */
+    --fs-base: 1rem; /* 16px */
+    --fs-lg: 1.25rem; /* 20px */
+    --fs-xl: 1.5rem; /* 24px */
+    --fs-xxl: 2.5rem; /* 32px */
+
+    /* Padding */
+    --pad-base: 1rem; /* 16px */
+    --pad-lg: 2rem; /* 32px */
+    --pad-xl: 3rem; /* 48px */
+    --pad-xxl: 4rem; /* 64px */
+
+    /* Margin */
+    --marg-base: 1rem; /* 16px */
+    --marg-lg: 2rem; /* 32px */
+    --marg-xl: 3rem; /* 48px */
+    --marg-xxl: 4rem; /* 64px */
+
+    /* Color */
+    --bg-light: #f8f9fa;
+    --bg-dark: #343a40;
+
+}
+
+html{
+
+    font-weight: var(--fw-base);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+}
+
+h1{
+    font-family: "Dancing Script", fantasy;
+}
