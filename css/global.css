@@ -42,15 +42,27 @@
     --bg-light: #f8f9fa;
     --bg-dark: #343a40;
 
+    --primary-color: #111111;
+    --secundary-color: #ff7060;
+
 }
 
 html{
-
+    color: var(--primary-color);
     font-weight: var(--fw-base);
     font-size: var(--fs-base);
     line-height: 1.6;
 }
 
-h1{
-    font-family: "Dancing Script", fantasy;
+h1, h2,h3, h4, a{
+    font-family: "Bebas Neue", sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+li{
+    list-style: none;
 }
