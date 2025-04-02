@@ -121,23 +121,146 @@ function changeLanguage(lang) {
     }
 }
 
-// Carregar preferências salvas no localStorage
-function loadSavedPreferences() {
-    // Verifica se há uma preferência de tema salva
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (savedDarkMode) {
-        isDarkMode = true;
-        document.body.classList.add('dark-theme');
-        themeButton.textContent = 'Modo Claro';
+// Função para criar efeito de digitação
+function createTypewriter(element, text, speed = 100, delay = 0, cursorBlink = true) {
+  // Define o texto como vazio inicialmente
+  element.textContent = '';
+  
+  // Adiciona a classe para estilização
+  element.classList.add('typewriter');
+  
+  // Cria o elemento do cursor
+  const cursor = document.createElement('span');
+  cursor.classList.add('typewriter-cursor');
+  cursor.textContent = '|';
+  
+  // Se o cursor deve piscar, adiciona a classe
+  if (cursorBlink) {
+    cursor.classList.add('typewriter-cursor-blink');
+  }
+  
+  // Adiciona o cursor ao elemento
+  element.appendChild(cursor);
+  
+  // Configura o atraso inicial
+  setTimeout(() => {
+    // Variável para controlar a posição atual
+    let charIndex = 0;
+    
+    // Função que adiciona cada caractere
+    function typeChar() {
+      if (charIndex < text.length) {
+        // Insere o texto antes do cursor
+        element.insertBefore(
+          document.createTextNode(text.charAt(charIndex)),
+          cursor
+        );
+        charIndex++;
+        setTimeout(typeChar, speed);
+      }
     }
     
-    // Verifica se há uma preferência de idioma salva
-    const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage) {
-        currentLanguage = savedLanguage;
-        languageSelect.value = savedLanguage;
-        changeLanguage(savedLanguage);
+    // Inicia a digitação
+    typeChar();
+  }, delay);
+  
+  // Retorna o elemento para possível encadeamento
+  return element;
+}
+
+// Função para criar efeito de digitação com múltiplas frases
+function createMultiTypewriter(element, phrases, options = {}) {
+    // Configurações padrão
+    const settings = {
+        typeSpeed: 100,
+        deleteSpeed: 50,
+        delayBetweenPhrases: 2000,
+        loop: true,
+        startDelay: 0,
+        cursorChar: '|',
+        ...options
+    };
+    
+    // Adiciona a classe para estilização
+    element.classList.add('multi-typewriter');
+    
+    // Cria o elemento de texto
+    const textElement = document.createElement('span');
+    textElement.classList.add('multi-typewriter-text');
+    
+    // Cria o elemento do cursor
+    const cursor = document.createElement('span');
+    cursor.classList.add('multi-typewriter-cursor');
+    cursor.textContent = settings.cursorChar;
+    
+    // Limpa o elemento e adiciona os novos elementos
+    element.textContent = '';
+    element.appendChild(textElement);
+    element.appendChild(cursor);
+    
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let timeoutId;
+    
+    // Função principal para digitar/apagar texto
+    function type() {
+        // Cancela qualquer timeout pendente
+        if (timeoutId) clearTimeout(timeoutId);
+        
+        // Obtém a frase atual do array
+        const currentPhrase = phrases[phraseIndex];
+        
+        // Calcula o delay baseado na ação atual
+        let delay;
+        
+        if (isDeleting) {
+            // Se estamos apagando
+            textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            delay = settings.deleteSpeed;
+        } else {
+            // Se estamos digitando
+            textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            delay = settings.typeSpeed;
+        }
+        
+        // Determina o próximo passo
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            // Concluiu a digitação da frase atual
+            delay = settings.delayBetweenPhrases;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            // Concluiu a exclusão da frase atual
+            isDeleting = false;
+            
+            // Avança para a próxima frase
+            phraseIndex++;
+            
+            // Se chegou ao fim das frases
+            if (phraseIndex === phrases.length) {
+                if (settings.loop) {
+                    // Reinicia do começo
+                    phraseIndex = 0;
+                } else {
+                    // Termina a animação
+                    return;
+                }
+            }
+        }
+        
+        // Agenda o próximo passo
+        timeoutId = setTimeout(type, delay);
     }
+    
+    // Inicia o efeito após o atraso inicial
+    setTimeout(type, settings.startDelay);
+    
+    // Retorna uma função para parar a animação
+    return function stop() {
+        if (timeoutId) clearTimeout(timeoutId);
+    };
 }
 
 // Fechar o menu quando clicar fora dele
@@ -164,11 +287,68 @@ configMenu.addEventListener('click', function(event) {
     event.stopPropagation();
 });
 
+// Carregar preferências salvas no localStorage
+function loadSavedPreferences() {
+    // Verifica se há uma preferência de tema salva
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        isDarkMode = true;
+        document.body.classList.add('dark-theme');
+        themeButton.textContent = 'Modo Claro';
+    }
+    
+    // Verifica se há uma preferência de idioma salva
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+        currentLanguage = savedLanguage;
+        languageSelect.value = savedLanguage;
+        changeLanguage(savedLanguage);
+    }
+}
+
+// Função para inicializar todas as funcionalidades ao carregar a página
+function initApp() {
+    // Carrega preferências salvas
+    loadSavedPreferences();
+    
+    // Inicializa o efeito de digitação simples
+    const typewriterElements = document.querySelectorAll('.typewriter-text');
+    typewriterElements.forEach((element, index) => {
+        // Obtém o texto original do elemento
+        const originalText = element.textContent;
+        
+        // Aplica o efeito com um atraso progressivo para elementos em sequência
+        createTypewriter(
+            element,
+            originalText,
+            50,  // velocidade (ms por caractere)
+            index * 1000  // atraso (ms) - aumenta para cada elemento seguinte
+        );
+    });
+    
+    // Inicializa o efeito de digitação com múltiplas frases
+    const multiTypewriterElements = document.querySelectorAll('.multi-typewriter-element');
+    multiTypewriterElements.forEach((element) => {
+        // Obtém as frases do atributo data-phrases (separadas por |)
+        const phrasesAttr = element.getAttribute('data-phrases');
+        if (phrasesAttr) {
+            const phrases = phrasesAttr.split('|');
+            
+            // Aplica o efeito
+            createMultiTypewriter(element, phrases, {
+                typeSpeed: parseInt(element.getAttribute('data-type-speed') || 100),
+                deleteSpeed: parseInt(element.getAttribute('data-delete-speed') || 50),
+                delayBetweenPhrases: parseInt(element.getAttribute('data-delay') || 2000)
+            });
+        }
+    });
+}
+
 // Adicionar event listeners
 configBtn.addEventListener('click', toggleConfigMenu);
 themeButton.addEventListener('click', toggleTheme);
 languageSelect.addEventListener('change', (e) => changeLanguage(e.target.value));
 document.addEventListener('click', closeMenuOnClickOutside);
 
-// Carrega preferências ao iniciar a página
-document.addEventListener('DOMContentLoaded', loadSavedPreferences);
+// Carrega preferências e inicializa o app quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', initApp);
