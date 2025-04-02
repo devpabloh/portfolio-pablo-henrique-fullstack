@@ -1,11 +1,10 @@
-
-
 .container-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: var(--pad-base) var(--pad-lg);
     background-color: var(--bg-light);
+    position: relative;
 
     & h1{
         font-size: var(--fs-xl);
@@ -16,5 +15,81 @@
         display: flex;
         gap: var(--pad-base);
         
+        & a {
+            position: relative;
+            padding-bottom: 3px;
+            transition: color 0.3s ease;
+            overflow: hidden; /* Impede que o underline vaze para fora do elemento */
+        }
+        
+        & a::after {
+            height: 3px; /* Linha mais grossa para links de navegação */
+            background-color: var(--terciary-color);
+            transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            bottom: 0;
+            border-radius: 3px; /* Bordas arredondadas para o underline */
+        }
+        
+        & a:hover {
+            color: var(--terciary-color);
+        }
+    }
+
+    /* Aplica tema escuro ao cabeçalho */
+    body.dark-theme & {
+        background-color: var(--bg-dark);
+        color: var(--bg-light);
+        
+        /* Mudar a cor do underline e do texto para laranja no modo escuro */
+        & .nav-list a::after {
+            background-color: var(--secundary-color) !important;
+        }
+        
+        & .nav-list a:hover {
+            color: var(--secundary-color) !important;
+        }
+    }
+
+    /* Ajusta o botão de configuração para o cabeçalho */
+    & .config-btn {
+        margin-left: var(--marg-base);
+    }
+    
+    /* Posicionamento do menu de configurações */
+    & .config-menu {
+        top: calc(100% - 5px);
+    }
+    
+    /* Removendo o efeito de underline para o logo */
+    & h1 a::after {
+        display: none;
+    }
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .container-header {
+        flex-wrap: wrap;
+        
+        & nav {
+            order: 3;
+            width: 100%;
+            margin-top: var(--marg-base);
+        }
+        
+        & .nav-list {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        & .config-btn {
+            order: 2;
+            margin-left: auto;
+        }
+        
+        & .config-menu {
+            top: calc(100% - 15px);
+            right: var(--pad-base);
+        }
     }
 }

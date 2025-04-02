@@ -44,6 +44,7 @@
 
     --primary-color: #111111;
     --secundary-color: #ff7060;
+    --terciary-color: #754ef9;
 
 }
 
@@ -61,8 +62,213 @@ h1, h2,h3, h4, a{
 a{
     text-decoration: none;
     color: inherit;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+/* Efeito de underline básico para todos os links */
+a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--terciary-color); /* Cor padrão para tema light */
+    transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1); /* Transição suave com curva de aceleração */
+    transform-origin: left; /* Garante que a animação comece da esquerda */
+}
+
+a:hover::after {
+    width: 100%; /* Expandir para 100% da largura ao passar o mouse */
+    transform-origin: left; /* Mantém a origem na esquerda */
+}
+
+a:hover {
+    color: var(--terciary-color); /* Cor padrão para tema light */
+}
+
+/* Cores específicas para tema escuro */
+body.dark-theme a::after {
+    background-color: var(--secundary-color); /* Cor para tema dark */
+}
+
+body.dark-theme a:hover {
+    color: var(--secundary-color); /* Cor para tema dark */
 }
 
 li{
     list-style: none;
+}
+
+/* Efeitos de hover avançados */
+/* Efeito de underline com delay para cada letra */
+.nav-list li {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-list li:nth-child(1) a::after { transition-delay: 0.05s; }
+.nav-list li:nth-child(2) a::after { transition-delay: 0.1s; }
+.nav-list li:nth-child(3) a::after { transition-delay: 0.15s; }
+.nav-list li:nth-child(4) a::after { transition-delay: 0.2s; }
+.nav-list li:nth-child(5) a::after { transition-delay: 0.25s; }
+.nav-list li:nth-child(6) a::after { transition-delay: 0.3s; }
+
+/* Efeito de hover avançado para os links de destaque */
+.spotlight-link {
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+.spotlight-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: rgba(117, 78, 249, 0.15); /* var(--terciary-color) com transparência */
+    transition: height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    z-index: -1;
+}
+
+.spotlight-link:hover::before {
+    height: 100%;
+}
+
+.spotlight-link::after {
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.4s ease;
+}
+
+.spotlight-link:hover::after {
+    width: 90%;
+}
+
+/* Botão de configurações */
+.config-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-left: auto;
+    padding: var(--pad-base);
+    z-index: 101;
+}
+
+.config-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--primary-color);
+    transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+.config-btn:hover svg {
+    transform: rotate(30deg);
+    fill: var(--terciary-color); /* Cor roxa ao passar o mouse no tema claro */
+}
+
+/* Menu suspenso */
+.config-menu {
+    position: absolute;
+    top: 100%;
+    right: var(--pad-lg);
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: var(--pad-base);
+    min-width: 200px;
+    z-index: 100;
+    display: none;
+    margin-top: 5px;
+}
+
+.config-menu.active {
+    display: block;
+}
+
+.config-menu-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.config-menu-item:last-child {
+    border-bottom: none;
+}
+
+.theme-toggle, .language-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.theme-toggle button {
+    background-color: var(--terciary-color); /* Cor roxa para o tema claro */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle button:hover {
+    background-color: var(--terciary-color); /* Manter a mesma cor */
+    opacity: 0.9; /* Mas com leve alteração de opacidade */
+    transform: translateY(-2px); /* Pequeno efeito de elevação */
+}
+
+.language-toggle select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Tema escuro */
+body.dark-theme {
+    background-color: var(--bg-dark);
+    color: var(--bg-light);
+}
+
+body.dark-theme .config-menu {
+    background-color: var(--bg-dark);
+    color: var(--bg-light);
+    border: 1px solid #555;
+}
+
+body.dark-theme .config-btn svg {
+    fill: var(--bg-light);
+}
+
+body.dark-theme .config-btn:hover svg {
+    fill: var(--secundary-color); /* Cor laranja ao passar o mouse no tema escuro */
+}
+
+body.dark-theme .config-menu-item {
+    border-bottom: 1px solid #555;
+}
+
+body.dark-theme .language-toggle select {
+    background-color: var(--bg-dark);
+    color: var(--bg-light);
+    border-color: #555;
+}
+
+body.dark-theme .theme-toggle button {
+    background-color: var(--secundary-color); /* Cor laranja para o tema escuro */
+}
+
+body.dark-theme .theme-toggle button:hover {
+    background-color: var(--secundary-color);
+    opacity: 0.9;
 }
