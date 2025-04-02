@@ -6,17 +6,34 @@
     <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <!-- CSS -->
+     <link rel="stylesheet" href="./css/index.css">
     <title>Dev. Pablo H.</title>
 
 </head>
 <body>
-    <header>
-        <div>
-            <h1>&lt;Pablo Henrique/&gt;</h1>
-        </div>
+    <header class="container-header" id="home">
+        <h1>
+            <a href="/home">
+                <span aria-hidden="true">&lt; </span>
+                   Dev Pablo H
+                <span aria-hidden="true">/&gt;</span>
+            </a>
+        </h1>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="/home">Inicio</a></li>
+                <li><a href="/about">Sobre</a></li>
+                <li><a href="/expertise">Formações</a></li>
+                <li><a href="/projects">Projetos</a></li>
+                <li><a href="/contact">Contato</a></li>
+
+                <li><a href="/downloadCv">Download CV</a></li>
+            </ul>
+        </nav>
     </header>
     
-    <script type="module" src="index.js"></script>
+    <script type="module" src="./js/index.js"></script>
 </body>
 </html>
