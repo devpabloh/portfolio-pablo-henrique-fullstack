@@ -1,28 +1,111 @@
-.container-apresentation{
+.apresentation-section {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    z-index: 2;
+    align-items: center;
+    justify-content: space-around;
+    padding: var(--pad-xxl) var(--pad-lg);
+    min-height: 80vh;
+    gap: var(--pad-xl);
+    flex-wrap: wrap;
+}
 
-    & .effect-apresentation {
-        width: 30vw;
-        height: 87vh;
-        background: linear-gradient(-45deg, 
-            var(--primary-color) 0%, 
-            var(--terciary-color) 25%, 
-            var(--secundary-color) 50%, 
-            var(--terciary-color) 75%, 
-            var(--primary-color) 100%);
-        background-size: 400% 400%;
-        animation: gradient-animation 15s ease infinite;
-
-        border: 2px solid transparent;
-        border-image: linear-gradient(to right, var(--secuncary-olor), var(--secundary-color));
-        border-image-slice: 1;
-
+.effect-apresentation {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(117, 78, 249, 0.5));
+    animation: pulse-light 6s infinite alternate;
+    transition: all 0.5s ease-in-out;
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
     
-    }
 
-   
+}
+
+.effect-apresentation::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, 
+        var(--terciary-color), 
+        transparent 30%
+    );
+    animation: rotate-animation 10s linear infinite;
     
 }
+
+.effect-apresentation::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    z-index: 1;
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    
+}
+
+@keyframes rotate-animation {
+    100% { 
+        transform: rotate(1turn); 
+    }
+}
+
+@keyframes pulse-light {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(117, 78, 249, 0.3);
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow: 0 0 30px rgba(117, 78, 249, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(117, 78, 249, 0.3);
+    }
+}
+
+/* Tema escuro para o efeito de apresentação */
+body.dark-theme .effect-apresentation {
+    background: linear-gradient(45deg, rgba(30, 30, 30, 0.5), rgba(255, 112, 96, 0.3));
+    animation: pulse-dark 6s infinite alternate;
+}
+
+body.dark-theme .effect-apresentation::before {
+    background: conic-gradient(
+        transparent, 
+        var(--secundary-color), 
+        transparent 30%
+    );
+}
+
+@keyframes pulse-dark {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 112, 96, 0.3);
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow: 0 0 30px rgba(255, 112, 96, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 112, 96, 0.3);
+    }
+}
+
+/* Ajuste responsivo para o efeito de apresentação */
+@media (max-width: 768px) {
+    .effect-apresentation {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+/* Estilos para a seção de apresentação */
+
