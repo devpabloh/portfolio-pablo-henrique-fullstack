@@ -15,7 +15,7 @@
 <body>
     <header class="container-header" id="home">
         <h1>
-            <a href="/home">
+            <a href="#home">
                 <span aria-hidden="true">&lt; </span>
                 Dev Pablo H
                 <span aria-hidden="true">/&gt;</span>
@@ -23,8 +23,8 @@
         </h1>
         <nav>
             <ul class="nav-list">
-                <li><a href="/home">Inicio</a></li>
-                <li><a href="/about">Sobre</a></li>
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#about">Sobre</a></li>
                 <li><a href="/expertise">Formações</a></li>
                 <li><a href="/projects">Projetos</a></li>
                 <li><a href="/contact">Contato</a></li>
@@ -55,9 +55,13 @@
         </div>
     </header>
     <main>
-        <section class="apresentation-section">
-            <div class="effect-apresentation">
-                <!-- Efeito visual sem conteúdo -->
+        <section class="apresentation-section"
+        id="home"
+        >
+            <div class="apresentation-container-effect">
+                <div class="effect-apresentation">
+                    <!-- Efeito visual sem conteúdo -->
+                </div>
             </div>
             <div class="intro-content">
                 <h1>Olá, Eu sou Pablo Henrique <span class="multi-typewriter-element" 
@@ -74,6 +78,18 @@
                 </div>
             </div>
         </section>
+        <section class="about-section" id="about">
+            <div class="about-section-img">
+                <img src="assets/background/fundo-about.png" alt="">
+            </div>
+            <div class="about-section-text">
+                <h2>Sobre mim</h2>
+                <p>Sou um desenvolvedor Full Stack apaixonado por criar aplicações web modernas e eficientes. Com expertise em tecnologias como React, TypeScript, Node.js, Express, MySQL, PostgreSQL e Docker, acompanho todas as etapas do desenvolvimento – desde a concepção do frontend até a modelagem e otimização do banco de dados.</p>
+                <p>Acredito que a tecnologia é uma ferramenta poderosa para facilitar a vida das pessoas, por isso, sempre busco desenvolver soluções acessíveis e com excelente experiência do usuário. Minha experiência prática em projetos completos me permite equilibrar a inovação com a solidez das boas práticas de desenvolvimento e segurança.</p>
+                <p>Além disso, estou inserido em ambientes que utilizam metodologias ágeis, o que fortalece minha capacidade de adaptação e colaboração em equipe para transformar ideias em resultados tangíveis e impactantes.</p>
+            </div>
+        </section>
+            
     </main>
     
     <script type="module" src="./js/index.js"></script>
