@@ -45,6 +45,7 @@
     --primary-color: #111111;
     --secundary-color: #ff7060;
     --terciary-color: #754ef9;
+    --quaternary-color: #ffff;
 
 }
 
@@ -271,6 +272,7 @@ body.dark-theme .theme-toggle button {
 body.dark-theme .theme-toggle button:hover {
     background-color: var(--secundary-color);
     opacity: 0.9;
+    color: white;
 }
 
 /* Estilos para o efeito de digitação */

@@ -114,7 +114,7 @@ body.dark-theme .btn-link:last-child {
 
 body.dark-theme .btn-link:last-child:hover {
     background-color: var(--secundary-color);
-    color: white;
+    color: var(--quaternary-color);
 }
 
 /* Ajustes para os efeitos de digitação */
